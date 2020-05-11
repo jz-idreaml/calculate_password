@@ -22,12 +22,24 @@ function toNumber(buf){
 }
 
 /**
+* 获取url参数
+*/
+function getQueryString(name) {
+	let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	let r = window.location.search.substr(1).match(reg);
+	if (r != null) {
+		return decodeURIComponent(r[2]);
+	};
+	return null;
+}
+
+/**
 * 计算密码
 */
 function cipher(input){
 
-	// 设置个人秘钥【注意修改为自己特有的秘钥】
-	var key = "idreaml";
+	// 个人秘钥【注意修改为自己特有的秘钥，从url参数key中读取】
+	var key = getQueryString("key");
 
 	// 计算出密码源数据
 	var sha256_buffer = sha256.digest(input + key);
