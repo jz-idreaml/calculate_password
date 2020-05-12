@@ -24,13 +24,13 @@ function toNumber(buf){
 /**
 * 获取url参数
 */
-function getQueryString(name) {
+function getQueryString(name, def) {
 	let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
 	let r = window.location.search.substr(1).match(reg);
 	if (r != null) {
 		return decodeURIComponent(r[2]);
 	};
-	return null;
+	return def;
 }
 
 /**
@@ -43,7 +43,7 @@ function cipher(input){
 	
 	// 如果一个页面想让多个人使用，不想内置固定秘钥，可以通过url参数指定秘钥。然后每个人收藏自己的网址就行。例如张三在浏览器访问：http://域名/文件名.html?key=张三的秘钥；李四在浏览器访问：http://域名/文件名.html?key=李四的秘钥
 	if(key == "张三没秘钥"){
-		key = getQueryString("key");
+		key = getQueryString("key", "");
 	}
 
 	// 计算出密码源数据
